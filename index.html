@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI 2028 地图</title>
+<meta name="description" content="AI 发展到哪一步、为什么 2028 是关键节点、经济社会会怎么变、从业者怎么办、2026-2028 个人行动路线图。中美对照，通俗版。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* 版式概念：地质剖面图。五层内容 = 五个由浅到深的"地层"，左侧是钻孔柱状索引，右侧是正文。 */
+:root {
+  --paper: #F2F4F3;
+  --sheet: #FBFCFC;
+  --ink: #16212B;
+  --muted: #586672;
+  --rule: #D3DBD9;
+  --accent: #2148C0;
+  --accent-soft: #E3E9FA;
+  --warn: #A55A00;
+  --warn-soft: #FAEEDC;
+  --good: #1F7A4D;
+  --good-soft: #E1F2E8;
+  --s1: #B7C6F3; --s2: #8EA6EC; --s3: #6283DE; --s4: #3D5FC6; --s5: #243F99;
+  --f-display: "Noto Serif SC", "Songti SC", "SimSun", serif;
+  --f-body: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0E141A; --sheet: #141C24; --ink: #E4EAEE; --muted: #9AA8B3; --rule: #27333D;
+    --accent: #8FA8FF; --accent-soft: #1B2747; --warn: #F0A646; --warn-soft: #33250F;
+    --good: #5FCB91; --good-soft: #12291D;
+    --s1: #2B3B66; --s2: #34498A; --s3: #4664C2; --s4: #6C88E3; --s5: #A3B8F7;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0E141A; --sheet: #141C24; --ink: #E4EAEE; --muted: #9AA8B3; --rule: #27333D;
+  --accent: #8FA8FF; --accent-soft: #1B2747; --warn: #F0A646; --warn-soft: #33250F;
+  --good: #5FCB91; --good-soft: #12291D;
+  --s1: #2B3B66; --s2: #34498A; --s3: #4664C2; --s4: #6C88E3; --s5: #A3B8F7;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--f-body); font-size: 16.5px; line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; line-height: 1.3; margin: 0; }
+h2 { font-size: clamp(1.7rem, 3.6vw, 2.3rem); font-weight: 900; }
+h3 { font-size: 1.22rem; font-weight: 600; }
+p { margin: 0; }
+.mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.eyebrow { font-family: var(--f-mono); font-size: .76rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+.wrap { padding-inline: 16px; padding-block: 0 64px; max-width: 1180px; margin: 0 auto; }
+@media (min-width: 720px) { .wrap { padding-inline: 32px; } }
+
+/* ---------- 封面 ---------- */
+.cover { padding-block: 56px 40px; display: grid; gap: 28px; border-bottom: 1px solid var(--rule); }
+.cover h1 { font-size: clamp(2.6rem, 8vw, 5rem); font-weight: 900; letter-spacing: -.01em; }
+.cover h1 span { color: var(--accent); }
+.cover .lede { font-size: 1.15rem; max-width: 40em; color: var(--ink); }
+.cover .meta { display: flex; flex-wrap: wrap; gap: 8px 20px; color: var(--muted); font-size: .9rem; }
+
+/* 剖面：一页看懂 */
+.section-core { display: grid; gap: 0; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; background: var(--sheet); }
+.core-row { display: grid; grid-template-columns: 10px 1fr; text-decoration: none; color: inherit; }
+.core-row + .core-row { border-top: 1px solid var(--rule); }
+.core-row .band { background: var(--c); }
+.core-row .txt { padding: 14px 18px; display: grid; gap: 2px; min-width: 0; }
+.core-row .txt b { font-family: var(--f-display); font-weight: 600; font-size: 1.05rem; }
+.core-row .txt span { color: var(--muted); font-size: .95rem; }
+.core-row:hover .txt b { color: var(--accent); }
+
+/* ---------- 主体布局 ---------- */
+.layout { display: grid; gap: 40px; padding-top: 32px; }
+@media (min-width: 1000px) { .layout { grid-template-columns: 200px minmax(0, 1fr); gap: 56px; } }
+.bore { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--paper); margin-inline: -16px; padding: 10px 16px; border-bottom: 1px solid var(--rule); overflow-x: auto; }
+.bore ol { list-style: none; margin: 0; padding: 0; display: flex; gap: 6px; white-space: nowrap; }
+.bore a { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--muted); font-size: .88rem; padding: 4px 10px 4px 4px; border-radius: 6px; }
+.bore a i { width: 18px; height: 18px; border-radius: 3px; background: var(--c); flex: none; }
+.bore a:hover, .bore a.on { color: var(--ink); background: var(--sheet); }
+@media (min-width: 1000px) {
+  .bore { top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; margin: 0; padding: 0; border: 0; background: none; overflow: visible; }
+  .bore ol { flex-direction: column; gap: 0; white-space: normal; }
+  .bore a { padding: 0; gap: 12px; border-radius: 0; background: none !important; }
+  .bore a i { width: 28px; height: 46px; border-radius: 0; }
+  .bore li:first-child a i { border-radius: 4px 4px 0 0; }
+  .bore li:nth-last-child(1) a i { border-radius: 0 0 4px 4px; }
+  .bore a.on span { font-weight: 700; }
+  .bore .depth { display: block; font-family: var(--f-mono); font-size: .7rem; color: var(--muted); margin-top: 10px; }
+}
+.bore .depth { display: none; }
+
+main { min-width: 0; display: grid; gap: 72px; }
+section.layer { display: grid; gap: 28px; scroll-margin-top: 70px; }
+.layer-head { display: grid; gap: 10px; padding-top: 18px; border-top: 6px solid var(--c); }
+.layer-head .q { font-size: 1.08rem; color: var(--muted); max-width: 42em; }
+.prose { display: grid; gap: 14px; max-width: 44em; }
+.prose strong { background: linear-gradient(transparent 62%, var(--accent-soft) 62%); }
+
+.verdict { background: var(--ink); color: var(--paper); padding: 18px 22px; border-radius: 10px; display: grid; gap: 6px; max-width: 46em; }
+.verdict .eyebrow { color: inherit; opacity: .7; }
+.verdict p { font-family: var(--f-display); font-size: 1.22rem; font-weight: 600; line-height: 1.55; }
+
+/* 通用网格 */
+.grid { display: grid; gap: 14px; }
+.g2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+.g3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+.card { background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; padding: 18px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.card h3 { font-size: 1.08rem; }
+.card p, .card li { font-size: .95rem; }
+.card ul { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
+
+/* 状态胶囊 */
+.pill { display: inline-flex; align-items: center; gap: 6px; font-size: .78rem; font-weight: 700; padding: 2px 10px; border-radius: 999px; width: fit-content; }
+.pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.pill.ready { color: var(--good); background: var(--good-soft); }
+.pill.fast { color: var(--accent); background: var(--accent-soft); }
+.pill.early { color: var(--warn); background: var(--warn-soft); }
+
+/* 进度刻度 */
+.gauge { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; }
+.gauge i { height: 6px; border-radius: 2px; background: var(--rule); }
+.gauge i.f { background: var(--accent); }
+.gauge-label { display: flex; justify-content: space-between; font-size: .72rem; color: var(--muted); font-family: var(--f-mono); }
+
+.num { font-family: var(--f-mono); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* 图表 */
+figure { margin: 0; background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; padding: 18px; display: grid; gap: 12px; min-width: 0; }
+figcaption { display: grid; gap: 4px; }
+figcaption b { font-family: var(--f-display); font-size: 1.1rem; font-weight: 600; }
+figcaption span, .fig-note { color: var(--muted); font-size: .86rem; }
+.chart-box { overflow-x: auto; position: relative; }
+.chart-box svg { display: block; width: 100%; min-width: 560px; height: auto; }
+.chart-box svg text { font-family: var(--f-mono); font-size: 11px; fill: var(--muted); }
+.chart-box svg .lbl { fill: var(--ink); font-family: var(--f-body); font-size: 12px; }
+.tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--paper); font-size: .8rem; line-height: 1.5; padding: 6px 10px; border-radius: 6px; max-width: 240px; }
+
+/* 表格 */
+.table-box { overflow-x: auto; border: 1px solid var(--rule); border-radius: 10px; background: var(--sheet); }
+table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: .92rem; }
+th, td { text-align: left; vertical-align: top; padding: 11px 14px; border-bottom: 1px solid var(--rule); }
+tr:last-child td { border-bottom: 0; }
+th { font-size: .78rem; letter-spacing: .06em; color: var(--muted); font-weight: 700; background: var(--paper); }
+td:first-child { font-weight: 700; white-space: nowrap; }
+
+/* 2x2 岗位地图 */
+.quad { display: grid; grid-template-columns: 28px 1fr 1fr; grid-template-rows: auto auto auto; gap: 8px; }
+.quad .axis-y { grid-row: 1 / 3; writing-mode: vertical-rl; text-align: center; letter-spacing: .1em; font-size: .78rem; color: var(--muted); font-family: var(--f-mono); }
+.quad .axis-x { grid-column: 2 / 4; text-align: center; font-size: .78rem; color: var(--muted); font-family: var(--f-mono); }
+.quad .cell { border-radius: 10px; padding: 14px; display: grid; gap: 6px; align-content: start; border: 1px solid var(--rule); background: var(--sheet); min-width: 0; }
+.quad .cell.hot { background: var(--warn-soft); border-color: transparent; }
+.quad .cell.mid { background: var(--accent-soft); border-color: transparent; }
+.quad .cell b { font-family: var(--f-display); font-size: 1rem; }
+.quad .cell p { font-size: .88rem; }
+.quad .cell small { color: var(--muted); font-size: .8rem; line-height: 1.6; }
+@media (max-width: 560px) { .quad { grid-template-columns: 1fr; } .quad .axis-y, .quad .axis-x { display: none; } }
+
+/* 便宜 vs 贵 */
+.scale { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; background: var(--sheet); }
+.scale > div { padding: 18px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.scale > div + div { border-left: 1px solid var(--rule); }
+.scale h3 { font-size: 1.05rem; }
+.scale ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.scale li { font-size: .93rem; padding-left: 22px; position: relative; }
+.scale li::before { position: absolute; left: 0; font-family: var(--f-mono); font-weight: 700; }
+.scale .down li::before { content: "↓"; color: var(--muted); }
+.scale .up li::before { content: "↑"; color: var(--warn); }
+@media (max-width: 600px) { .scale { grid-template-columns: 1fr; } .scale > div + div { border-left: 0; border-top: 1px solid var(--rule); } }
+
+/* 细思极恐 */
+.dark-list { display: grid; gap: 0; border: 1px solid var(--warn); border-radius: 10px; overflow: hidden; background: var(--sheet); }
+.dark-list > div { padding: 16px 18px; display: grid; grid-template-columns: 2.2em 1fr; gap: 4px 12px; }
+.dark-list > div + div { border-top: 1px solid var(--rule); }
+.dark-list .n { font-family: var(--f-mono); color: var(--warn); font-weight: 600; grid-row: 1 / 3; }
+.dark-list b { font-family: var(--f-display); font-weight: 600; }
+.dark-list p { font-size: .93rem; color: var(--muted); }
+.counter { border-left: 3px solid var(--good); padding: 4px 0 4px 16px; display: grid; gap: 8px; max-width: 46em; }
+.counter p { font-size: .95rem; }
+
+/* 阶梯 */
+.ladder { display: grid; gap: 8px; }
+.rung { display: grid; grid-template-columns: 56px 1fr; gap: 14px; align-items: start; background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; }
+.rung .lv { font-family: var(--f-mono); font-weight: 600; font-size: 1.1rem; color: var(--accent); }
+.rung b { font-family: var(--f-display); font-weight: 600; }
+.rung p { font-size: .93rem; }
+.rung small { color: var(--muted); font-size: .84rem; display: block; margin-top: 4px; }
+
+/* 角色循环 */
+.loop { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: 0; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; background: var(--sheet); }
+.loop > div { padding: 16px; display: grid; gap: 6px; align-content: start; border-right: 1px solid var(--rule); }
+.loop > div:last-child { border-right: 0; }
+.loop .step { font-family: var(--f-mono); font-size: .75rem; color: var(--accent); letter-spacing: .1em; }
+.loop b { font-family: var(--f-display); font-size: 1.08rem; }
+.loop p { font-size: .9rem; color: var(--muted); }
+
+/* 时间线 */
+.years { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr)); }
+.year { background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; display: grid; align-content: start; }
+.year header { padding: 14px 18px; border-top: 6px solid var(--c); border-bottom: 1px solid var(--rule); display: grid; gap: 2px; }
+.year header .y { font-family: var(--f-mono); font-weight: 600; font-size: 1.5rem; line-height: 1.2; }
+.year header .t { font-family: var(--f-display); font-weight: 600; }
+.year .body { padding: 16px 18px; display: grid; gap: 14px; }
+.year h4 { margin: 0; font-size: .78rem; letter-spacing: .08em; color: var(--muted); font-family: var(--f-mono); }
+.year ul { margin: 4px 0 0; padding-left: 1.1em; display: grid; gap: 4px; font-size: .92rem; }
+
+.scen { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+.scen .card { border-top: 4px solid var(--c); }
+
+details { background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 18px; }
+details summary { cursor: pointer; font-weight: 700; }
+details[open] summary { margin-bottom: 10px; }
+details ul, details ol { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; font-size: .93rem; }
+
+.callout { border: 1px dashed var(--accent); border-radius: 10px; padding: 16px 18px; display: grid; gap: 8px; max-width: 46em; background: var(--accent-soft); }
+.callout b { font-family: var(--f-display); }
+
+footer.end { margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--rule); color: var(--muted); font-size: .88rem; display: grid; gap: 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="cover">
+  <div class="eyebrow">通俗版研究报告 · 中美对照 · 2026 年 10 月版</div>
+  <h1>AI <span>2028</span> 地图</h1>
+  <p class="lede">AI 到底走到了哪一步？为什么 2028 年值得盯紧？工作、收入和公司会怎么变？普通从业者现在该做什么？这份报告用五层"剖面"把这件事从上往下挖一遍。高中生也能读懂，结论尽量说真话，包括让人不舒服的部分。</p>
+  <div class="meta">
+    <span>数据截至 2026 年 9 月</span>
+    <span>标"推演"的内容是判断，不是事实</span>
+    <span>阅读时间约 25 分钟</span>
+  </div>
+
+  <div class="section-core" aria-label="一页看懂">
+    <a class="core-row" href="#l1" style="--c:var(--s1)"><div class="band"></div><div class="txt"><b>第一层 · 能力已经到了，组织还没跟上</b><span>AI 能独立干的活，从几秒钟涨到十几个小时，大约每 4~7 个月翻一倍。但大多数公司还停在"试点"阶段。</span></div></a>
+    <a class="core-row" href="#l2" style="--c:var(--s2)"><div class="band"></div><div class="txt"><b>第二层 · 2028 是"验收年"</b><span>技术趋势、数据中心投产、公司预算重做、AI 时代第一批大学毕业生，几条线在 2027~2028 交汇。</span></div></a>
+    <a class="core-row" href="#l3" style="--c:var(--s3)"><div class="band"></div><div class="txt"><b>第三层 · 先断的是职业阶梯的最底层</b><span>受冲击最早的是"入门级白领"。"会做"越来越便宜，"会判断、能负责、被信任"越来越贵。</span></div></a>
+    <a class="core-row" href="#l4" style="--c:var(--s4)"><div class="band"></div><div class="txt"><b>第四层 · 从"执行 AI 的人"变成"定义、组织、验证 AI 的人"</b><span>具体要练的是：把问题写清楚、拆给 Agent、检查结果、对结果负责。</span></div></a>
+    <a class="core-row" href="#l5" style="--c:var(--s5)"><div class="band"></div><div class="txt"><b>第五层 · 2026 打地基，2027 建杠杆，2028 拥有结果</b><span>每年盯几个关键信号，AI 跑得快或慢，都有对应的调整方案。</span></div></a>
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="bore" aria-label="章节">
+    <ol>
+      <li><a href="#l1" style="--c:var(--s1)"><i></i><span>第一层 · 进度</span></a></li>
+      <li><a href="#l2" style="--c:var(--s2)"><i></i><span>第二层 · 2028</span></a></li>
+      <li><a href="#l3" style="--c:var(--s3)"><i></i><span>第三层 · 经济社会</span></a></li>
+      <li><a href="#l4" style="--c:var(--s4)"><i></i><span>第四层 · 从业者</span></a></li>
+      <li><a href="#l5" style="--c:var(--s5)"><i></i><span>第五层 · 路线图</span></a></li>
+      <li><a href="#appendix" style="--c:var(--rule)"><i></i><span>附录 · 信号表与来源</span></a></li>
+    </ol>
+    <span class="depth">越往下越接近"你自己"</span>
+  </nav>
+
+  <main>
+
+<!-- ======================= 第一层 ======================= -->
+<section class="layer" id="l1" style="--c:var(--s1)">
+  <div class="layer-head">
+    <div class="eyebrow">第一层 · 现状</div>
+    <h2>AI 到底发展到了哪一步？</h2>
+    <p class="q">别看新闻标题，看六个硬指标：模型能力、Agent、编程、自动化、成本、企业采用。</p>
+  </div>
+
+  <div class="prose">
+    <p>判断 AI 进度，最好用的一把尺子是：<strong>它能独立完成一件"人类专家要花多长时间"的活</strong>。研究机构 METR 一直在用这个方法给 AI 打分。结果很惊人：2019 年的 AI 只能完成人类几秒钟的任务，到 2026 年初，最强的 AI 已经有一半的把握完成人类专家要干 16~20 个小时的任务。</p>
+    <p>注意"一半把握"这四个字。如果要求 80% 成功率，这个数字会缩到 3~4 小时。这就是今天 AI 的真实画像：<strong>能干长活，但还不够稳</strong>。</p>
+  </div>
+
+  <figure>
+    <figcaption>
+      <b>AI 能独立完成的任务长度（50% 成功率）</b>
+      <span>纵轴按对数刻度，每上一格是十倍级别的跳跃。虚线区域是"如果趋势继续"的推演，不是预测保证。</span>
+    </figcaption>
+    <div class="chart-box" id="metr-box">
+      <svg id="metr" viewBox="0 0 760 380" role="img" aria-label="AI 任务时间跨度随年份变化的折线图，从 2019 年约 2 秒增长到 2026 年初约 18 小时"></svg>
+    </div>
+    <p class="fig-note">数据：METR 时间跨度研究（2025）、Time Horizon 1.1（2026.1）、Frontier Risk Report（2026.5）。各点为近似值。推演区间：按每 4 个月翻倍（快）到每 7 个月翻倍（慢）。</p>
+  </figure>
+
+  <div class="grid g3">
+    <div class="card">
+      <span class="pill ready">已成熟</span>
+      <h3>模型能力</h3>
+      <div><div class="gauge"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></div></div>
+      <p>考试、竞赛、专业知识问答，顶尖模型已超过大多数人类专家。但能力是"锯齿状"的：会解奥数题，也会在简单数数上犯错。</p>
+    </div>
+    <div class="card">
+      <span class="pill fast">快速推进</span>
+      <h3>Agent（智能体）</h3>
+      <div><div class="gauge"><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i></div></div>
+      <p>能自己上网、读文件、写代码、调用工具，一干几个小时。短板是可靠性：长任务中途走偏、自信地交出错误结果。</p>
+    </div>
+    <div class="card">
+      <span class="pill ready">已成熟</span>
+      <h3>编程（Coding）</h3>
+      <div><div class="gauge"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></div></div>
+      <p>落地最深的领域。修真实软件 bug 的测试（SWE-bench Verified）成绩从 2023 年的个位数涨到 2025 年底约 80%。谷歌、微软称三成以上新代码由 AI 写。</p>
+    </div>
+    <div class="card">
+      <span class="pill fast">快速推进</span>
+      <h3>自动化程度</h3>
+      <div><div class="gauge"><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i></div></div>
+      <p>企业通过 API 使用 Claude 时，约 75% 是"直接把整件事交给 AI"，而不是一起商量。个人用户则一半一半。企业比个人更想"替代"。</p>
+    </div>
+    <div class="card">
+      <span class="pill ready">持续暴跌</span>
+      <h3>成本</h3>
+      <div><div class="gauge"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></div></div>
+      <p>同等能力的 AI 价格大约每年降到原来的十分之一。斯坦福 AI 指数：GPT-3.5 水平的使用成本在两年内降了 280 倍。便宜到足以替代"按小时付钱的人"。</p>
+    </div>
+    <div class="card">
+      <span class="pill early">早期</span>
+      <h3>企业采用</h3>
+      <div><div class="gauge"><i class="f"></i><i class="f"></i><i></i><i></i><i></i></div></div>
+      <p>麦肯锡 2025 调查：近九成公司"在用"AI，但只有约三分之一做到规模化。"用了"和"用好了"之间隔着流程、数据、责任划分和组织惯性。</p>
+    </div>
+  </div>
+  <div class="gauge-label"><span>刻度：■ 越多代表越接近"能在真实工作中稳定替人干活"</span></div>
+
+  <figure>
+    <figcaption>
+      <b>美国四大云厂商每年资本开支（亿美元）</b>
+      <span>微软、谷歌、亚马逊、Meta 的投入，大部分用于 AI 数据中心。钱已经砸下去了，回报的压力会在 2027~2028 年集中到来。</span>
+    </figcaption>
+    <div class="chart-box" id="capex-box">
+      <svg id="capex" viewBox="0 0 760 300" role="img" aria-label="柱状图：2023 年约 1400 亿美元，2024 年约 2300 亿，2025 年约 4100 亿，2026 年指引约 7250 亿"></svg>
+    </div>
+    <p class="fig-note">数据：各公司财报及 2026 年中期指引汇总，近似值。作为对比：中国头部互联网公司同期 AI 资本开支合计约为美国的十分之一到五分之一，但用开源和低价换取了大规模使用。</p>
+  </figure>
+
+  <h3>中美对照：两种完全不同的打法</h3>
+  <div class="table-box">
+    <table>
+      <thead><tr><th>维度</th><th>美国</th><th>中国</th></tr></thead>
+      <tbody>
+        <tr><td>最强模型</td><td>领先，前沿闭源模型主要在 OpenAI、Anthropic、谷歌</td><td>落后几个月；DeepSeek、通义千问、Kimi、智谱、MiniMax 五家紧追</td></tr>
+        <tr><td>开源</td><td>以闭源为主</td><td>开源主导。千问在 Hugging Face 上的衍生模型数量全球第一，很多海外公司在用中国开源模型</td></tr>
+        <tr><td>算力</td><td>最强芯片和最多数据中心</td><td>受芯片出口管制，靠国产芯片和更省算力的算法；电力供应充足是优势</td></tr>
+        <tr><td>价格</td><td>贵，靠企业付费</td><td>极便宜，价格战频繁，靠规模和生态</td></tr>
+        <tr><td>政策</td><td>市场驱动，监管偏松</td><td>国家主导。"人工智能+"行动：2027 年智能终端和智能体普及率超 70%，2030 年超 90%</td></tr>
+        <tr><td>落地重心</td><td>软件、企业服务、编程、金融</td><td>制造业、硬件终端、政务、电商、机器人</td></tr>
+        <tr><td>年轻人就业</td><td>应届大学生失业率 5.7%，高于整体的 4.1%（2026.6）</td><td>16~24 岁（不含在校生）失业率 18.9%（2026.8）</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="verdict">
+    <span class="eyebrow">第一层结论</span>
+    <p>技术能力已经够替代大量"可以在电脑上完成、结果可以检查"的工作。真正卡住的是组织：流程、数据、责任和信任。这个缺口不会一直存在。</p>
+  </div>
+  <div class="prose">
+    <p>还有一个容易被忽略的事实：<strong>体感不等于真实</strong>。METR 2025 年做过一个对照实验，让资深程序员用 AI 干活，结果他们平均慢了 19%，但他们自己觉得快了 20%。AI 的价值很大，但"用上了"和"真的提效了"是两回事，要靠测量，不靠感觉。</p>
+  </div>
+</section>
+
+<!-- ======================= 第二层 ======================= -->
+<section class="layer" id="l2" style="--c:var(--s2)">
+  <div class="layer-head">
+    <div class="eyebrow">第二层 · 时间节点</div>
+    <h2>为什么 2028 是一个值得观察的节点？</h2>
+    <p class="q">不是因为某个人预言了 2028，而是好几条独立的线在 2027~2028 年交汇。</p>
+  </div>
+
+  <div class="grid g2">
+    <div class="card"><h3>① 技术线：从"一天的活"到"一周的活"</h3><p>按每 4~7 个月翻倍外推，到 2028 年，AI 有可能以较高的可靠度完成人类一周（40 小时）级别的项目。能干一周的活，意味着可以把"一个完整的岗位任务"交给它，而不只是一个步骤。</p></div>
+    <div class="card"><h3>② 算力线：数据中心集中投产</h3><p>2025~2026 年开工的吉瓦级数据中心，大多在 2027~2028 年投入使用。训练规模会再上一个台阶，推理（使用）价格继续下降。</p></div>
+    <div class="card"><h3>③ 钱的线：7000 亿美元要看回报</h3><p>一年七千多亿美元的投入，需要对应的收入。最大的收入来源是什么？是企业省下的人工预算。2027~2028 年要么回报兑现（意味着大规模替代人力），要么出现泡沫调整。两种都是大事。</p></div>
+    <div class="card"><h3>④ 组织线：试点结束，开始改编制</h3><p>新技术进入公司一般走三步：试点 → 改流程 → 改编制。2024~2026 是试点，2027~2028 是把 AI 写进年度预算、招聘计划和组织架构的时候。</p></div>
+    <div class="card"><h3>⑤ 人的线：第一批"AI 原生"毕业生</h3><p>2028 届大学生 2024 年入学时，ChatGPT 已经存在了。他们毕业时，入门岗位还剩多少，会是最直观的社会信号。</p></div>
+    <div class="card"><h3>⑥ 政策线：两个国家都到了检查点</h3><p>中国"人工智能+"2027 年目标验收，"十五五"规划进入中期；美国 2028 年大选，AI 与就业几乎必然成为核心议题。</p></div>
+  </div>
+
+  <h3>AI 进入工作的三个阶段</h3>
+  <div class="loop">
+    <div><span class="step">2023–2025</span><b>副驾驶</b><p>人干活，AI 帮忙：写草稿、查资料、补代码。人对每一步负责。</p></div>
+    <div><span class="step">2026–2027</span><b>外包一段流程</b><p>把一段完整流程交给 Agent：整理一份尽调、修一组 bug、跑一轮客服。人检查结果。</p></div>
+    <div><span class="step">2028 前后（推演）</span><b>对结果负责的数字员工</b><p>一组 Agent 拿到目标后自己分工、执行、自检。人负责定目标、批预算、签字、对外承担责任。</p></div>
+  </div>
+
+  <h3>推演：到 2028，这六件事会怎么变</h3>
+  <div class="table-box">
+    <table>
+      <thead><tr><th>领域</th><th>今天（2026）</th><th>2028 年（推演）</th></tr></thead>
+      <tbody>
+        <tr><td>生产效率</td><td>个人层面提效明显，公司层面数据还不明显</td><td>"人均产出"在软件、客服、内容、金融后台等行业明显上升，开始体现在财报上</td></tr>
+        <tr><td>公司组织</td><td>金字塔：大量初级员工在底层</td><td>菱形或沙漏形：底层变薄，少数资深的人带一群 Agent；10 人做出过去 100 人的业务</td></tr>
+        <tr><td>岗位需求</td><td>招聘冻结，"用 AI 能做吗"成了招人前的问题</td><td>岗位描述重写：从"做 X"变成"负责 X 的结果，管理 AI 完成 X"</td></tr>
+        <tr><td>就业</td><td>整体稳定，年轻白领入门岗明显收缩</td><td>入门岗位缺口扩大；中层管理被压缩；一部分人转向小团队、自由职业、一人公司</td></tr>
+        <tr><td>收入分配</td><td>AI 相关岗位工资溢价高</td><td>收入向"拥有 AI 的人"（资本、平台、能组织 AI 的人）集中；普通执行岗工资承压</td></tr>
+        <tr><td>商业模式</td><td>软件按"席位"收费</td><td>按"结果"收费（每解决一个工单、每完成一份报告）；"服务即软件"，卖的是干完的活</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <figure>
+    <figcaption><b>公司形状的变化（示意）</b><span>同样的业务量，人员结构从金字塔变成上宽下窄的菱形，底层工作由 Agent 承担。</span></figcaption>
+    <div class="chart-box">
+      <svg viewBox="0 0 760 250" role="img" aria-label="左边是金字塔形组织，右边是底部由 Agent 承担的菱形组织">
+        <g>
+          <polygon points="190,30 320,210 60,210" fill="var(--s2)"/>
+          <line x1="125" y1="120" x2="255" y2="120" stroke="var(--sheet)" stroke-width="2"/>
+          <line x1="95" y1="165" x2="285" y2="165" stroke="var(--sheet)" stroke-width="2"/>
+          <text x="190" y="235" text-anchor="middle" class="lbl">2024：金字塔</text>
+          <text x="330" y="80" class="lbl">管理层</text>
+          <text x="330" y="145" class="lbl">资深</text>
+          <text x="330" y="195" class="lbl">初级（最多）</text>
+        </g>
+        <g>
+          <polygon points="560,30 640,120 560,170 480,120" fill="var(--s4)"/>
+          <rect x="450" y="178" width="220" height="32" rx="4" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="6 5"/>
+          <text x="560" y="199" text-anchor="middle" class="lbl">Agent 层（不占编制）</text>
+          <text x="560" y="235" text-anchor="middle" class="lbl">2028：菱形 + Agent</text>
+          <text x="650" y="80" class="lbl">定目标、担责</text>
+          <text x="650" y="135" class="lbl">编排与验证</text>
+        </g>
+      </svg>
+    </div>
+  </figure>
+
+  <div class="verdict">
+    <span class="eyebrow">第二层结论</span>
+    <p>2028 不一定是"AI 取代人类"的一年，但很可能是"公司重新决定需要多少人、需要什么样的人"的一年。决定一旦写进预算，就很难回头。</p>
+  </div>
+</section>
+
+<!-- ======================= 第三层 ======================= -->
+<section class="layer" id="l3" style="--c:var(--s3)">
+  <div class="layer-head">
+    <div class="eyebrow">第三层 · 经济与社会</div>
+    <h2>经济与社会会发生什么变化？</h2>
+    <p class="q">哪些工作先被重构、钱往哪里流、谁的议价能力变强、什么东西变便宜、什么东西变贵。</p>
+  </div>
+
+  <h3>哪些工作首先被重构：一张两轴地图</h3>
+  <div class="prose"><p>判断一份工作被冲击的速度，看两件事：<strong>它能不能在电脑上完成</strong>，以及<strong>做错了代价有多大、需不需要有人签字负责</strong>。</p></div>
+  <div class="quad">
+    <div class="axis-y">越能在电脑上完成 ▲</div>
+    <div class="cell hot">
+      <b>最先被重构</b>
+      <p>能数字化，错了容易发现、容易改。</p>
+      <small>客服、初级程序员、翻译、文案、数据录入、报表分析、法律检索、设计初稿、电话销售、外包服务</small>
+    </div>
+    <div class="cell mid">
+      <b>AI 做草稿，人来签字</b>
+      <p>能数字化，但出错代价高，需要执照或担责。</p>
+      <small>医生诊断、律师、审计会计、投资研究、工程设计、教师备课。人数会减少，但"签字的人"不会消失</small>
+    </div>
+    <div class="cell">
+      <b>受冲击较慢</b>
+      <p>在物理世界里，环境多变，机器人还不够便宜。</p>
+      <small>水电工、维修、厨师、护理、快递末端、建筑。注意：中国的机器人产业进展很快，这一格的时间可能比美国短</small>
+    </div>
+    <div class="cell">
+      <b>相对最稳</b>
+      <p>物理世界 + 高度依赖人与人之间的信任。</p>
+      <small>外科手术、急救、心理咨询、幼儿教育、高端销售、需要"真人在场"的服务</small>
+    </div>
+    <div class="axis-x">◀ 错了容易改　　　　错了代价高、需要有人担责 ▶</div>
+  </div>
+
+  <h3>利润池在往哪里转移</h3>
+  <div class="grid g2">
+    <div class="card">
+      <h3>钱从这里流出</h3>
+      <ul>
+        <li>按"人头 × 小时"收费的生意：外包、客服中心、初级咨询、内容工厂</li>
+        <li>按"席位"收费的传统软件（员工少了，席位就少了）</li>
+        <li>靠信息差赚钱的中间商：代写、代查、简单代理</li>
+        <li>中国：大量外包、客服、电商运营和内容生产岗位</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>钱流向这里</h3>
+      <ul>
+        <li>芯片、电力、数据中心：AI 的"水电煤"</li>
+        <li>拥有用户入口和分发渠道的平台</li>
+        <li>拥有独家数据、独家客户关系的公司</li>
+        <li>能对结果负责的服务商：卖"干完的活"，不卖工时</li>
+        <li>中国：AI + 制造业、机器人、硬件终端</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>白领和知识工作者会经历什么</h3>
+  <div class="grid g3">
+    <div class="card"><h3>梯子底层断了</h3><p>新人过去靠做基础活（整理资料、写初稿、跑数据）慢慢成长。这些活现在 AI 做得又快又便宜。斯坦福 2025 年研究：在最容易被 AI 替代的职业里，22~25 岁员工的就业人数相对下降了 13%，而同岗位的年长员工没受影响。</p></div>
+    <div class="card"><h3>中层被压缩</h3><p>中层管理的很多工作是"传话、汇总、协调"。Agent 能自动汇总进度、写周报、分配任务后，一个管理者能管的范围变大，层级变少。</p></div>
+    <div class="card"><h3>资深者杠杆变大</h3><p>懂行、有判断力的资深人员，配上 AI 后一个人顶一个小组。工作内容从"自己做"变成"审别人做的"，这个"别人"越来越多是 AI。</p></div>
+  </div>
+
+  <h3>议价能力怎么变</h3>
+  <div class="table-box">
+    <table>
+      <thead><tr><th>谁</th><th>议价能力</th><th>原因</th></tr></thead>
+      <tbody>
+        <tr><td>只会执行的员工</td><td>下降</td><td>可替代性变高。公司谈薪时的潜台词变成"这件事 AI 也能做"</td></tr>
+        <tr><td>能独立交付结果的人</td><td>上升</td><td>一个人加一群 Agent 能做完整项目，可以单干、接项目、开一人公司，不必依附大组织</td></tr>
+        <tr><td>公司（对员工）</td><td>上升</td><td>需要的人少了，招聘市场变成买方市场</td></tr>
+        <tr><td>公司（对 AI 供应商）</td><td>下降</td><td>核心流程依赖少数几家模型公司，涨价、断供、政策变化都会受制于人</td></tr>
+        <tr><td>国家（对算力）</td><td>分化</td><td>拥有芯片和电力的国家握有筹码；这也是中美竞争的核心</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>什么越来越便宜，什么越来越贵</h3>
+  <div class="scale">
+    <div class="down">
+      <h3>越来越便宜</h3>
+      <ul>
+        <li>写作初稿、翻译、摘要</li>
+        <li>写代码、做网页、做简单 App</li>
+        <li>标准化的数据分析和报表</li>
+        <li>设计初稿、图片、视频素材</li>
+        <li>常规法律、财务、医疗"咨询答案"</li>
+        <li>"知道某个知识点"本身</li>
+        <li>会用某个软件的熟练度</li>
+      </ul>
+    </div>
+    <div class="up">
+      <h3>越来越贵</h3>
+      <ul>
+        <li>信任：愿意签字、为结果担责的人</li>
+        <li>判断与品味：知道什么是"好"</li>
+        <li>定义问题：知道该做什么、不该做什么</li>
+        <li>一手信息和真实的人际关系</li>
+        <li>物理世界的技能和"真人在场"</li>
+        <li>独家数据、独家场景</li>
+        <li>注意力，以及电力和算力</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>不太舒服的真相</h3>
+  <div class="dark-list">
+    <div><span class="n">01</span><b>学徒制正在断裂</b><p>没有初级岗位，就没有十年后的资深专家。公司短期省了钱，社会长期少了一代能"验证 AI"的人。这是一个没人负责的问题。</p></div>
+    <div><span class="n">02</span><b>经济增长，工资不涨</b><p>AI 让 GDP 和公司利润上升，但收益更多流向资本和少数人。"没有就业的增长"在历史上出现过，这次可能更明显。</p></div>
+    <div><span class="n">03</span><b>很多人的身份感会受打击</b><p>工作不只是收入，也是"我是谁"。当你花十年练的技能突然变成"AI 一分钟就能做"，心理冲击比收入下降更难处理。</p></div>
+    <div><span class="n">04</span><b>权力更集中</b><p>少数几家公司、两三个国家控制最强的模型和算力。普通人、小公司、小国家的谈判筹码在变少。</p></div>
+    <div><span class="n">05</span><b>真假越来越难分</b><p>以假乱真的文字、声音、视频成本接近于零。诈骗更容易，信任成本更高，"能证明自己是真人"会变成一种资产。</p></div>
+    <div><span class="n">06</span><b>人会"技能萎缩"</b><p>什么都交给 AI，自己的判断力会退化。而判断力恰恰是未来最值钱的东西。最危险的状态是：既不会做，也看不出 AI 做错了。</p></div>
+    <div><span class="n">07</span><b>中美的痛点不一样</b><p>中国：青年失业率本来就高，外包、客服、内容运营岗位多，冲击会叠加；但人口老龄化导致劳动力短缺，AI 和机器人又能补位。美国：社会保障薄，失业对个人打击更重；但更多人通过股票间接持有 AI 公司，能分到一部分收益。</p></div>
+  </div>
+
+  <div class="counter">
+    <b>另一面也要看到</b>
+    <p><b>历史上技术总在创造新工作。</b>1900 年美国四成人务农，今天不到 2%，但失业率没有变成 38%。只是转型期的痛苦会落在具体的人身上。</p>
+    <p><b>东西变便宜，需求可能暴增（经济学叫"杰文斯悖论"）。</b>写软件便宜十倍以后，世界需要的软件可能多出一百倍，懂行的人反而更忙。</p>
+    <p><b>很多"AI 裁员"其实是借口。</b>有些公司拿 AI 当理由，掩盖本来就要做的成本削减（被称为"AI 洗白"）。看裁员新闻时，要分清是"AI 真的替代了"还是"借 AI 的名义"。</p>
+  </div>
+
+  <div class="verdict">
+    <span class="eyebrow">第三层结论</span>
+    <p>"会做事"在贬值，"知道做什么、能判断对错、愿意负责、被人信任"在升值。最先受伤的是刚入行的年轻白领，以及靠出卖工时赚钱的中间层。</p>
+  </div>
+</section>
+
+<!-- ======================= 第四层 ======================= -->
+<section class="layer" id="l4" style="--c:var(--s4)">
+  <div class="layer-head">
+    <div class="eyebrow">第四层 · 个人策略</div>
+    <h2>作为身处其中的从业者，怎么办？</h2>
+    <p class="q">"学习 AI"太空泛。下面是具体要练什么、扔掉什么、怎么用 Agent、怎么挑工作。</p>
+  </div>
+
+  <h3>核心转变：你在工作中的位置要往上移</h3>
+  <div class="loop">
+    <div><span class="step">第 1 步</span><b>定义问题</b><p>把一个模糊的需求写成清楚的目标、约束和"做完长什么样"的验收标准。</p></div>
+    <div><span class="step">第 2 步</span><b>组织 AI</b><p>把任务拆成步骤，分给不同的 Agent，给它们需要的资料和工具。</p></div>
+    <div><span class="step">第 3 步</span><b>验证结果</b><p>抽查、测试、对数，找出 AI 一本正经胡说八道的地方。</p></div>
+    <div><span class="step">第 4 步</span><b>对结果负责</b><p>拍板、签字、向客户或老板交付。这一步是你不可替代的地方。</p></div>
+  </div>
+  <div class="prose"><p>今天大多数人停在"执行"：自己干，偶尔问问 AI。未来值钱的位置是这四步的循环。<strong>执行这一环会越来越多交给 AI，而你要成为那个转动循环的人。</strong></p></div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>未来两三年要积累的 8 种能力</h3>
+      <ul>
+        <li><b>问题定义</b>：每个任务开始前先写一句"做完长什么样"</li>
+        <li><b>领域深度</b>：懂一个行业的潜规则、真实约束和客户心理，这是 AI 缺的上下文</li>
+        <li><b>验证能力</b>：知道怎么测、怎么查、怎么判断对错</li>
+        <li><b>流程设计</b>：把工作拆成可以交给 Agent 的步骤，并设置检查点</li>
+        <li><b>清晰写作</b>：写得清楚就是给 AI 下指令最好的方式</li>
+        <li><b>技术素养</b>：能看懂代码、用命令行、做简单自动化、懂数据</li>
+        <li><b>品味</b>：多看好作品，知道"好"和"还行"的差别</li>
+        <li><b>信任与关系</b>：客户、同行、社群里的口碑</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>可以降低投入或放弃的</h3>
+      <ul>
+        <li>死记硬背的知识点和语法细节（但要懂原理，否则无法验证）</li>
+        <li>手工排版、格式调整、复制粘贴、整理表格</li>
+        <li>跟别人比谁写初稿更快</li>
+        <li>"我比别人更熟悉某个软件的菜单"</li>
+        <li>追每一个新模型、新工具的新闻（选定一两个工具用深）</li>
+        <li>纯靠信息差的工作方式</li>
+      </ul>
+      <p class="fig-note">原则：可以不亲手做，但必须能看懂、能判断。</p>
+    </div>
+  </div>
+
+  <h3>怎么用 Agent：五级台阶</h3>
+  <div class="ladder">
+    <div class="rung"><span class="lv">L0</span><div><b>聊天问答</b><p>把 AI 当搜索引擎和顾问。大多数人在这里。</p></div></div>
+    <div class="rung"><span class="lv">L1</span><div><b>交出一整件小事</b><p>"根据这三份材料写一份两页的分析报告"，然后你修改。</p><small>练习：每天至少把一件真实工作完整交给 AI 做初版。</small></div></div>
+    <div class="rung"><span class="lv">L2</span><div><b>给 Agent 工具，让它跑多步</b><p>用 Claude Code、Codex 一类工具，让它自己读文件、写代码、运行、测试、修改。</p><small>练习：写一份"项目说明"文件（背景、目标、规则、验收标准），每次让 Agent 先读它。</small></div></div>
+    <div class="rung"><span class="lv">L3</span><div><b>搭可重复的工作流</b><p>每周自动收集行业信息并出简报、自动处理某类表单、自动生成某类报告。</p><small>练习：找出你每周重复三次以上的工作，把它变成一个自动流程。</small></div></div>
+    <div class="rung"><span class="lv">L4</span><div><b>同时管理多个 Agent</b><p>你像一个小团队的负责人：分配任务、看日志、审核产出、对外负责。</p><small>目标：2028 年前达到这一级。</small></div></div>
+  </div>
+
+  <details>
+    <summary>用 Agent 的 7 条实操规则（点开）</summary>
+    <ol>
+      <li>先写验收标准，再让 AI 动手。没有标准，你就无法判断它做得好不好。</li>
+      <li>给足上下文：背景、目标、限制、例子。AI 犯错多半是因为缺信息。</li>
+      <li>小步走：一次一个可检查的步骤，不要一次让它做完全部。</li>
+      <li>让它自己检查：要求它写测试、列出不确定的地方、给出依据来源。</li>
+      <li>保留记录：重要任务的指令和结果存档，形成你自己的"工作流库"。</li>
+      <li>划清数据边界：客户隐私、公司机密不要随意喂给外部工具。</li>
+      <li>定期测量：同一件事，用 AI 和不用 AI 各花多少时间、质量差多少。用数据说话，不靠感觉。</li>
+    </ol>
+  </details>
+
+  <h3>建立个人杠杆</h3>
+  <div class="prose">
+    <p>杠杆就是"投入一份力，得到多份回报"。传统上有四种杠杆：<strong>人</strong>（雇人）、<strong>资本</strong>（用钱生钱）、<strong>代码</strong>（写一次，运行无数次）、<strong>内容</strong>（写一次，被无数人看）。前两种需要别人批准，后两种不需要。AI 让普通人也能用上代码和内容这两种杠杆：你不需要是程序员也能做出工具，不需要团队也能持续产出。</p>
+  </div>
+  <div class="grid g3">
+    <div class="card"><h3>可复用的工作流库</h3><p>把你调好的提示词、项目说明、自动化脚本存起来，像这份报告一样放进 GitHub。它们会持续升值。</p></div>
+    <div class="card"><h3>公开的作品</h3><p>写文章、做工具、发案例。让别人能看到你"能交付结果"，这比简历更有说服力。</p></div>
+    <div class="card"><h3>独家的积累</h3><p>你的行业笔记、客户洞察、一手数据。这些是 AI 拿不到的，也是你给 AI 下指令时最有价值的上下文。</p></div>
+  </div>
+
+  <h3>选择工作和项目的 6 个问题</h3>
+  <div class="table-box">
+    <table>
+      <thead><tr><th>问自己</th><th>好的答案</th></tr></thead>
+      <tbody>
+        <tr><td>离"结果"近还是离"过程"近？</td><td>能对一个可衡量的结果负责（收入、客户、上线的产品），而不是只负责其中一个环节</td></tr>
+        <tr><td>AI 变强，这个岗位变值钱还是不值钱？</td><td>AI 是你的杠杆，而不是你的替代品</td></tr>
+        <tr><td>有没有独家的东西？</td><td>有专有数据、真实客户、物理场景或行业资质</td></tr>
+        <tr><td>团队是不是已经在深度用 AI？</td><td>是。在落后的组织里，你学不到未来的工作方式</td></tr>
+        <tr><td>能不能积累可带走的作品和声誉？</td><td>能。离职后，你的能力别人看得见</td></tr>
+        <tr><td>行业有没有"签字门槛"？</td><td>受监管、需要执照或担责的行业，替代会更慢，给你留出转型时间</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <b>一个测试问题</b>
+    <p>"如果明年 AI 再强十倍、再便宜十倍，我现在的工作是更值钱，还是更不值钱？"如果答案是"更不值钱"，现在就该开始调整，而不是等到 2028。</p>
+  </div>
+</section>
+
+<!-- ======================= 第五层 ======================= -->
+<section class="layer" id="l5" style="--c:var(--s5)">
+  <div class="layer-head">
+    <div class="eyebrow">第五层 · 行动</div>
+    <h2>个人行动路线图：2026 → 2027 → 2028</h2>
+    <p class="q">每一年做什么、盯哪些信号；AI 跑得比预期快或慢，各自怎么调整。</p>
+  </div>
+
+  <div class="years">
+    <article class="year" style="--c:var(--s3)">
+      <header><span class="y">2026</span><span class="t">打地基（剩下的一个季度）</span></header>
+      <div class="body">
+        <div><h4>目标</h4><p>把 AI 变成日常工作的一部分，达到 L2。</p></div>
+        <div><h4>行动</h4><ul>
+          <li>每天至少一件真实工作交给 AI 完成初版</li>
+          <li>选定一个主力工具（如 Claude Code）用深</li>
+          <li>建一个 GitHub 仓库存放你的工作流、笔记和作品</li>
+          <li>写一份"AI 做不好的地方"清单，这就是你的护城河</li>
+          <li>算清自己的现金储备能撑几个月</li>
+        </ul></div>
+        <div><h4>观察信号</h4><ul>
+          <li>Agent 80% 成功率的任务长度是否突破 8 小时（一个工作日）</li>
+          <li>你所在公司是否从"鼓励用 AI"变成"冻结招聘"</li>
+          <li>应届生失业率、青年失业率的走向</li>
+        </ul></div>
+      </div>
+    </article>
+    <article class="year" style="--c:var(--s4)">
+      <header><span class="y">2027</span><span class="t">建杠杆</span></header>
+      <div class="body">
+        <div><h4>目标</h4><p>达到 L3，工作重心从"执行"转向"定义 + 验证"。</p></div>
+        <div><h4>行动</h4><ul>
+          <li>搭出 2~3 个能自动运行的工作流</li>
+          <li>做出 1~2 个公开作品：工具、文章系列、案例</li>
+          <li>主动争取"对结果负责"的角色或项目</li>
+          <li>在一个细分领域建立口碑</li>
+          <li>现金储备提高到 6~12 个月</li>
+        </ul></div>
+        <div><h4>观察信号</h4><ul>
+          <li>大公司财报中"人均收入"是否明显上升</li>
+          <li>"按结果收费"的 AI 服务是否普及</li>
+          <li>中国"人工智能+"2027 年目标的完成情况</li>
+          <li>AI 公司收入能否跟上资本开支（泡沫与否）</li>
+        </ul></div>
+      </div>
+    </article>
+    <article class="year" style="--c:var(--s5)">
+      <header><span class="y">2028</span><span class="t">拥有结果</span></header>
+      <div class="body">
+        <div><h4>目标</h4><p>达到 L4：成为"一个人 + 一群 Agent"的完整作战单元。</p></div>
+        <div><h4>三条可选路径</h4><ul>
+          <li>公司内部：AI 编排负责人、流程重构负责人</li>
+          <li>独立：顾问、一人公司、小团队产品</li>
+          <li>跨界：物理世界 + AI（制造、医疗、能源、机器人）</li>
+        </ul></div>
+        <div><h4>观察信号</h4><ul>
+          <li>AI 能否可靠完成"一周级"项目</li>
+          <li>白领失业率是否明显上升</li>
+          <li>政策回应：AI 税、全民基本收入试点、再培训计划</li>
+          <li>美国大选和中国"十五五"中期对 AI 的态度</li>
+        </ul></div>
+      </div>
+    </article>
+  </div>
+
+  <h3>三种情景，三套调整</h3>
+  <div class="scen">
+    <div class="card" style="--c:var(--warn)">
+      <span class="pill early">情景 A · 快于预期</span>
+      <p><b>怎么识别</b>：2027 年 AI 已能可靠完成一周级任务；大公司公开大规模缩减白领编制；应届生失业率超过 7%。</p>
+      <p><b>怎么调整</b>：</p>
+      <ul>
+        <li>加速往"拥有"的一侧移动：持有资产，不只靠工资</li>
+        <li>降低固定开支，现金储备拉到 12 个月以上</li>
+        <li>向"物理世界 + 信任 + 监管"领域靠拢</li>
+        <li>尽早成为"用 AI 的老板"，不要等成为"被 AI 替代的员工"</li>
+      </ul>
+    </div>
+    <div class="card" style="--c:var(--accent)">
+      <span class="pill fast">情景 B · 符合预期</span>
+      <p><b>怎么识别</b>：能力稳步提升，企业逐步改流程，就业市场缓慢变化，入门岗持续收缩但没有崩盘。</p>
+      <p><b>怎么调整</b>：</p>
+      <ul>
+        <li>按上面的年度路线图执行</li>
+        <li>每半年复盘一次信号表</li>
+        <li>保持"领域深度 + AI 杠杆"两条腿走路</li>
+      </ul>
+    </div>
+    <div class="card" style="--c:var(--good)">
+      <span class="pill ready">情景 C · 慢于预期</span>
+      <p><b>怎么识别</b>：可靠性卡住、成本降不下来；AI 投资收缩、股价大跌；企业大规模撤回 AI 项目。</p>
+      <p><b>怎么调整</b>：</p>
+      <ul>
+        <li>不要放下 AI 技能。2000 年互联网泡沫破裂后，互联网照样改变了世界</li>
+        <li>领域深度的价值回升，多投入行业本身</li>
+        <li>别人放弃时是窗口期，用便宜的工具做别人不做的事</li>
+        <li>注意 AI 相关岗位本身的裁员风险</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verdict">
+    <span class="eyebrow">第五层结论</span>
+    <p>不需要猜中 AI 的速度。只要每半年看一次信号，确保自己始终在"定义、组织、验证、负责"这条线上往前走，三种情景下都不会被甩下。</p>
+  </div>
+</section>
+
+<!-- ======================= 附录 ======================= -->
+<section class="layer" id="appendix" style="--c:var(--rule)">
+  <div class="layer-head">
+    <div class="eyebrow">附录</div>
+    <h2>信号表、名词解释与来源</h2>
+    <p class="q">建议每季度更新一次"当前值"这一列。</p>
+  </div>
+
+  <div class="table-box">
+    <table>
+      <thead><tr><th>信号</th><th>当前值</th><th>警戒线</th><th>在哪看</th></tr></thead>
+      <tbody>
+        <tr><td>AI 任务时间跨度（80% 成功率）</td><td class="mono">3~4 小时（2026 初）</td><td class="mono">&gt; 40 小时</td><td>METR</td></tr>
+        <tr><td>AI 任务时间跨度（50% 成功率）</td><td class="mono">16~20 小时（2026 初）</td><td class="mono">&gt; 1 个月工时</td><td>METR</td></tr>
+        <tr><td>美国应届大学生失业率</td><td class="mono">5.7%（2026.6）</td><td class="mono">&gt; 7%</td><td>纽约联储</td></tr>
+        <tr><td>美国应届生"低就业"率</td><td class="mono">约 42%（2026 Q2）</td><td class="mono">&gt; 45%</td><td>纽约联储</td></tr>
+        <tr><td>中国 16~24 岁青年失业率</td><td class="mono">18.9%（2026.8）</td><td class="mono">&gt; 22%</td><td>国家统计局</td></tr>
+        <tr><td>美国四大云厂商资本开支</td><td class="mono">约 7250 亿美元（2026 指引）</td><td>增速转负 = 调整信号</td><td>各公司财报</td></tr>
+        <tr><td>企业 API 中"直接交给 AI"的比例</td><td class="mono">约 75%</td><td>持续上升 = 替代加速</td><td>Anthropic 经济指数</td></tr>
+        <tr><td>同等能力 AI 的价格</td><td class="mono">约每年降到 1/10</td><td>停止下降 = 减速信号</td><td>斯坦福 AI 指数、Epoch AI</td></tr>
+        <tr><td>中国智能体等应用普及率目标</td><td class="mono">2027 年 &gt; 70%</td><td>看完成情况</td><td>国务院"人工智能+"意见</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <details>
+    <summary>名词解释（点开）</summary>
+    <ul>
+      <li><b>模型</b>：AI 的"大脑"，比如 Claude、GPT、DeepSeek、通义千问。</li>
+      <li><b>Agent（智能体）</b>：会自己动手的 AI。不只回答问题，还能用工具、执行多步任务。</li>
+      <li><b>时间跨度</b>：AI 能独立完成的任务，相当于人类专家干多长时间。</li>
+      <li><b>开源 / 开放权重</b>：模型可以免费下载、自己部署。中国主要走这条路。</li>
+      <li><b>推理成本</b>：每用一次 AI 要花的钱，通常按"每百万字"计价。</li>
+      <li><b>资本开支</b>：公司买设备、盖数据中心花的钱。</li>
+      <li><b>杰文斯悖论</b>：东西变便宜后，总用量反而大增。</li>
+      <li><b>AI 洗白</b>：公司把普通裁员说成"因为 AI"，以显得先进。</li>
+      <li><b>低就业</b>：有工作，但这份工作不需要你的学历，比如大学生去做不需要学历的工作。</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>主要来源（点开）</summary>
+    <ul>
+      <li><a href="https://metr.org/research/" target="_blank" rel="noopener">METR：AI 任务时间跨度研究</a>，以及 <a href="https://metr.org/blog/2026-1-29-time-horizon-1-1/" target="_blank" rel="noopener">Time Horizon 1.1</a>、<a href="https://metr.org/blog/2026-05-19-frontier-risk-report/" target="_blank" rel="noopener">Frontier Risk Report（2026.5）</a></li>
+      <li>METR（2025）：资深开源开发者使用 AI 的随机对照实验（慢 19%）</li>
+      <li><a href="https://www.anthropic.com/research/anthropic-economic-index-january-2026-report" target="_blank" rel="noopener">Anthropic 经济指数报告（2026）</a></li>
+      <li>Stanford HAI，AI Index Report 2025（推理成本下降 280 倍）</li>
+      <li>Brynjolfsson 等，"Canaries in the Coal Mine"，斯坦福数字经济实验室，2025</li>
+      <li>McKinsey，The State of AI，2025</li>
+      <li><a href="https://www.newyorkfed.org/research/college-labor-market" target="_blank" rel="noopener">纽约联储：应届大学生劳动力市场</a></li>
+      <li><a href="https://www.caixinglobal.com/2026-09-18/chinas-youth-unemployment-hits-record-high-102486238.html" target="_blank" rel="noopener">国家统计局青年失业率（财新报道，2026.9）</a></li>
+      <li><a href="https://www.stdaily.com/web/gdxw/2025-08/26/content_390875.html" target="_blank" rel="noopener">国务院《关于深入实施"人工智能+"行动的意见》（2025.8）</a></li>
+      <li><a href="https://huggingface.co/blog/huggingface/one-year-since-the-deepseek-moment-blog-3" target="_blank" rel="noopener">Hugging Face：DeepSeek 时刻一年后的开源生态</a></li>
+      <li><a href="https://www.uscc.gov/sites/default/files/2026-03/Two_Loops--How_Chinas_Open_AI_Strategy_Reinforces_Its_Industrial_Dominance.pdf" target="_blank" rel="noopener">美中经济与安全审查委员会：中国开源 AI 战略（2026.3）</a></li>
+      <li><a href="https://www.crv.com/content/ai-capex-2026" target="_blank" rel="noopener">2026 年 AI 资本开支汇总</a></li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>这份报告怎么维护、怎么继续（点开）</summary>
+    <ul>
+      <li>报告本体是仓库里的 <code>index.html</code>，用浏览器直接打开就能看，不依赖任何服务器。</li>
+      <li>更新方法、恢复方法、给 AI 的续写指令，都写在仓库的 <code>README.md</code> 里。</li>
+      <li>建议每季度更新一次附录信号表，每半年复盘一次第五层的情景判断。</li>
+    </ul>
+  </details>
+</section>
+
+  </main>
+</div>
+
+<footer class="end">
+  <p>AI 2028 地图 · v1.0 · 2026 年 10 月</p>
+  <p>本报告用于个人学习和决策参考。数据为公开资料的近似整理，推演部分代表判断而非事实，请结合最新信息自行判断。</p>
+</footer>
+</div>
+
+<script>
+(function () {
+  var NS = "http://www.w3.org/2000/svg";
+  function el(name, attrs, parent) {
+    var n = document.createElementNS(NS, name);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(n);
+    return n;
+  }
+  function tipFor(box) {
+    var t = document.createElement("div");
+    t.className = "tip"; t.hidden = true; box.appendChild(t);
+    return function (html, x, y) {
+      if (html === null) { t.hidden = true; return; }
+      t.innerHTML = html; t.hidden = false;
+      var bw = box.clientWidth;
+      t.style.left = Math.min(Math.max(x + 12, 0), bw - 250) + "px";
+      t.style.top = Math.max(y - 56, 0) + "px";
+    };
+  }
+
+  /* ---------- METR 时间跨度（对数刻度，单位：分钟） ---------- */
+  var metr = [
+    { t: 2019.1, v: 0.04, n: "GPT-2", d: "约 2 秒" },
+    { t: 2020.4, v: 0.15, n: "GPT-3", d: "约 9 秒" },
+    { t: 2022.2, v: 0.6, n: "GPT-3.5", d: "约 36 秒" },
+    { t: 2023.2, v: 5, n: "GPT-4", d: "约 5 分钟" },
+    { t: 2024.8, v: 28, n: "Claude 3.5 Sonnet（新版）", d: "约 28 分钟" },
+    { t: 2025.15, v: 59, n: "Claude 3.7 Sonnet", d: "约 1 小时" },
+    { t: 2025.3, v: 92, n: "o3", d: "约 1.5 小时" },
+    { t: 2025.6, v: 137, n: "GPT-5", d: "约 2.3 小时" },
+    { t: 2025.9, v: 289, n: "Claude Opus 4.5", d: "约 4.8 小时" },
+    { t: 2026.2, v: 1080, n: "2026 年初最强模型（METR 估计）", d: "约 16~20 小时" }
+  ];
+  var svg = document.getElementById("metr");
+  if (svg) {
+    var W = 760, H = 380, L = 92, R = 20, T = 20, B = 40;
+    var t0 = 2019, t1 = 2028.2, vMin = Math.log10(0.01), vMax = Math.log10(60000);
+    var x = function (t) { return L + (t - t0) / (t1 - t0) * (W - L - R); };
+    var y = function (v) { return T + (vMax - Math.log10(v)) / (vMax - vMin) * (H - T - B); };
+    var ticks = [[1 / 60, "1 秒"], [1, "1 分钟"], [60, "1 小时"], [480, "1 个工作日"], [2400, "1 周（40h）"], [10000, "1 个月"]];
+    ticks.forEach(function (k) {
+      el("line", { x1: L, x2: W - R, y1: y(k[0]), y2: y(k[0]), stroke: "var(--rule)", "stroke-width": 1 }, svg);
+      var tx = el("text", { x: L - 8, y: y(k[0]) + 4, "text-anchor": "end" }, svg); tx.textContent = k[1];
+    });
+    for (var yr = 2019; yr <= 2028; yr++) {
+      var tt = el("text", { x: x(yr), y: H - B + 22, "text-anchor": "middle" }, svg); tt.textContent = yr;
+      el("line", { x1: x(yr), x2: x(yr), y1: H - B, y2: H - B + 5, stroke: "var(--rule)" }, svg);
+    }
+    el("line", { x1: L, x2: W - R, y1: H - B, y2: H - B, stroke: "var(--muted)", "stroke-width": 1 }, svg);
+    // 推演区间：每 4 个月翻倍（快）~ 每 7 个月翻倍（慢）
+    var last = metr[metr.length - 1];
+    var fast = [], slow = [];
+    for (var s = last.t; s <= 2028.01; s += 0.1) {
+      var m = (s - last.t) * 12;
+      fast.push([x(s), y(Math.min(last.v * Math.pow(2, m / 4), 60000))]);
+      slow.push([x(s), y(last.v * Math.pow(2, m / 7))]);
+    }
+    var cone = fast.map(function (p) { return p.join(","); }).concat(slow.slice().reverse().map(function (p) { return p.join(","); }));
+    el("polygon", { points: cone.join(" "), fill: "var(--accent-soft)", stroke: "none" }, svg);
+    el("polyline", { points: fast.map(function (p) { return p.join(","); }).join(" "), fill: "none", stroke: "var(--accent)", "stroke-width": 1.5, "stroke-dasharray": "5 5" }, svg);
+    el("polyline", { points: slow.map(function (p) { return p.join(","); }).join(" "), fill: "none", stroke: "var(--accent)", "stroke-width": 1.5, "stroke-dasharray": "5 5" }, svg);
+    var lf = el("text", { x: x(2027.3) - 8, y: y(last.v * Math.pow(2, 13.2 / 4)) - 4, "text-anchor": "end", class: "lbl" }, svg); lf.textContent = "快：每 4 个月翻倍";
+    var ls = el("text", { x: x(2026.45), y: y(last.v * Math.pow(2, 3 / 7)) + 24, "text-anchor": "start", class: "lbl" }, svg); ls.textContent = "慢：每 7 个月翻倍";
+    // 实测折线
+    el("polyline", { points: metr.map(function (d) { return x(d.t) + "," + y(d.v); }).join(" "), fill: "none", stroke: "var(--accent)", "stroke-width": 2, "stroke-linejoin": "round" }, svg);
+    // 2026 区间（16~20h）
+    el("line", { x1: x(last.t), x2: x(last.t), y1: y(1200), y2: y(960), stroke: "var(--accent)", "stroke-width": 6, "stroke-linecap": "round" }, svg);
+    var show = tipFor(document.getElementById("metr-box"));
+    metr.forEach(function (d, i) {
+      el("circle", { cx: x(d.t), cy: y(d.v), r: 4.5, fill: "var(--accent)", stroke: "var(--sheet)", "stroke-width": 2 }, svg);
+      var hit = el("circle", { cx: x(d.t), cy: y(d.v), r: 14, fill: "transparent", tabindex: 0 }, svg);
+      var html = "<b>" + d.n + "</b><br>" + Math.floor(d.t) + " 年 · 能完成人类" + d.d + "的任务";
+      var on = function (e) {
+        var b = svg.getBoundingClientRect(), sc = b.width / W;
+        show(html, x(d.t) * sc, y(d.v) * sc);
+      };
+      hit.addEventListener("mouseenter", on); hit.addEventListener("focus", on);
+      hit.addEventListener("mouseleave", function () { show(null); }); hit.addEventListener("blur", function () { show(null); });
+      if (i === 3 || i === 8) {
+        var lt = el("text", { x: x(d.t) - 8, y: y(d.v) - 10, "text-anchor": "end", class: "lbl" }, svg); lt.textContent = d.n;
+      }
+    });
+    var le = el("text", { x: x(last.t) - 10, y: y(last.v) - 14, "text-anchor": "end", class: "lbl" }, svg); le.textContent = "2026 初：16~20 小时";
+  }
+
+  /* ---------- 资本开支柱状图（亿美元） ---------- */
+  var capex = [
+    { y: "2023", v: 1400, note: "约 1400 亿" },
+    { y: "2024", v: 2300, note: "约 2300 亿" },
+    { y: "2025", v: 4100, note: "约 4100 亿" },
+    { y: "2026", v: 7250, note: "约 7250 亿（指引）" }
+  ];
+  var cs = document.getElementById("capex");
+  if (cs) {
+    var CW = 760, CH = 300, CL = 64, CR = 20, CT = 30, CB = 36, max = 8000;
+    var cy = function (v) { return CT + (1 - v / max) * (CH - CT - CB); };
+    [0, 2000, 4000, 6000, 8000].forEach(function (g) {
+      el("line", { x1: CL, x2: CW - CR, y1: cy(g), y2: cy(g), stroke: "var(--rule)" }, cs);
+      var gt = el("text", { x: CL - 8, y: cy(g) + 4, "text-anchor": "end" }, cs); gt.textContent = g;
+    });
+    var slot = (CW - CL - CR) / capex.length, bw = Math.min(90, slot * 0.5);
+    var showC = tipFor(document.getElementById("capex-box"));
+    capex.forEach(function (d, i) {
+      var cx = CL + slot * i + slot / 2, top = cy(d.v), bot = cy(0), r = 4;
+      var path = "M" + (cx - bw / 2) + "," + bot + " V" + (top + r) + " Q" + (cx - bw / 2) + "," + top + " " + (cx - bw / 2 + r) + "," + top +
+        " H" + (cx + bw / 2 - r) + " Q" + (cx + bw / 2) + "," + top + " " + (cx + bw / 2) + "," + (top + r) + " V" + bot + " Z";
+      var bar = el("path", { d: path, fill: i === 3 ? "var(--accent)" : "var(--s2)", tabindex: 0 }, cs);
+      var vt = el("text", { x: cx, y: top - 8, "text-anchor": "middle", class: "lbl" }, cs); vt.textContent = d.note;
+      var yt = el("text", { x: cx, y: CH - CB + 20, "text-anchor": "middle" }, cs); yt.textContent = d.y;
+      var on = function () { var b = cs.getBoundingClientRect(), sc = b.width / CW; showC("<b>" + d.y + " 年</b><br>四大云厂商资本开支" + d.note + "美元", cx * sc, top * sc); };
+      bar.addEventListener("mouseenter", on); bar.addEventListener("focus", on);
+      bar.addEventListener("mouseleave", function () { showC(null); }); bar.addEventListener("blur", function () { showC(null); });
+    });
+  }
+
+  /* ---------- 章节高亮 ---------- */
+  var links = Array.prototype.slice.call(document.querySelectorAll(".bore a"));
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle("on", a.getAttribute("href") === "#" + e.target.id); });
+      });
+    }, { rootMargin: "-40% 0px -55% 0px" });
+    document.querySelectorAll("section.layer").forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>
