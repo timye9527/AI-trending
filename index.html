@@ -228,6 +228,39 @@ details ul, details ol { margin: 0; padding-left: 1.2em; display: grid; gap: 6px
 .callout b { font-family: var(--f-display); }
 
 footer.end { margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--rule); color: var(--muted); font-size: .88rem; display: grid; gap: 8px; }
+
+/* ---------- 打印 / PDF ---------- */
+@page { size: A4; margin: 14mm 12mm 16mm; }
+@media print {
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --paper: #FFFFFF; --sheet: #FFFFFF; --ink: #16212B; --muted: #4F5D69; --rule: #D3DBD9;
+    --accent: #2148C0; --accent-soft: #E3E9FA; --warn: #A55A00; --warn-soft: #FAEEDC;
+    --good: #1F7A4D; --good-soft: #E1F2E8;
+    --s1: #B7C6F3; --s2: #8EA6EC; --s3: #6283DE; --s4: #3D5FC6; --s5: #243F99;
+    color-scheme: light;
+  }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-size: 10.5pt; line-height: 1.7; }
+  .wrap { max-width: none; padding-inline: 0; padding-block: 0; }
+  .bore, .tip { display: none !important; }
+  .layout { display: block; padding-top: 0; }
+  main { display: block; }
+  .cover { padding-block: 0 20px; border-bottom: 0; }
+  .cover h1 { font-size: 40pt; }
+  section.layer { break-before: page; gap: 18px; display: grid; }
+  .layer-head { padding-top: 12px; }
+  h2, h3, .layer-head, figcaption { break-after: avoid; }
+  .card, figure, .rung, .year, .scen .card, .dark-list > div, .verdict, .callout, .counter, .quad .cell, tr, .loop > div, .core-row, details li { break-inside: avoid; }
+  .chart-box { overflow: visible; }
+  .chart-box svg { min-width: 0; }
+  .table-box { overflow: visible; }
+  table { min-width: 0; font-size: 9.5pt; }
+  td:first-child { white-space: normal; }
+  details summary { list-style: none; }
+  details summary .hint { display: none; }
+  details summary::-webkit-details-marker { display: none; }
+  footer.end { margin-top: 32px; }
+}
 </style>
 </head>
 <body>
@@ -623,7 +656,7 @@ footer.end { margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--ru
   </div>
 
   <details>
-    <summary>用 Agent 的 7 条实操规则（点开）</summary>
+    <summary>用 Agent 的 7 条实操规则<span class="hint">（点开）</span></summary>
     <ol>
       <li>先写验收标准，再让 AI 动手。没有标准，你就无法判断它做得好不好。</li>
       <li>给足上下文：背景、目标、限制、例子。AI 犯错多半是因为缺信息。</li>
@@ -799,7 +832,7 @@ footer.end { margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--ru
   </div>
 
   <details>
-    <summary>名词解释（点开）</summary>
+    <summary>名词解释<span class="hint">（点开）</span></summary>
     <ul>
       <li><b>模型</b>：AI 的"大脑"，比如 Claude、GPT、DeepSeek、通义千问。</li>
       <li><b>Agent（智能体）</b>：会自己动手的 AI。不只回答问题，还能用工具、执行多步任务。</li>
@@ -814,7 +847,7 @@ footer.end { margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--ru
   </details>
 
   <details>
-    <summary>主要来源（点开）</summary>
+    <summary>主要来源<span class="hint">（点开）</span></summary>
     <ul>
       <li><a href="https://metr.org/research/" target="_blank" rel="noopener">METR：AI 任务时间跨度研究</a>，以及 <a href="https://metr.org/blog/2026-1-29-time-horizon-1-1/" target="_blank" rel="noopener">Time Horizon 1.1</a>、<a href="https://metr.org/blog/2026-05-19-frontier-risk-report/" target="_blank" rel="noopener">Frontier Risk Report（2026.5）</a></li>
       <li>METR（2025）：资深开源开发者使用 AI 的随机对照实验（慢 19%）</li>
@@ -832,7 +865,7 @@ footer.end { margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--ru
   </details>
 
   <details>
-    <summary>这份报告怎么维护、怎么继续（点开）</summary>
+    <summary>这份报告怎么维护、怎么继续<span class="hint">（点开）</span></summary>
     <ul>
       <li>报告本体是仓库里的 <code>index.html</code>，用浏览器直接打开就能看，不依赖任何服务器。</li>
       <li>更新方法、恢复方法、给 AI 的续写指令，都写在仓库的 <code>README.md</code> 里。</li>
@@ -845,7 +878,7 @@ footer.end { margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--ru
 </div>
 
 <footer class="end">
-  <p>AI 2028 地图 · v1.0 · 2026 年 10 月</p>
+  <p>AI 2028 地图 · v1.0 · 2026 年 10 月 · PDF 版：仓库中的 <a href="AI-2028-Map.pdf">AI-2028-Map.pdf</a></p>
   <p>本报告用于个人学习和决策参考。数据为公开资料的近似整理，推演部分代表判断而非事实，请结合最新信息自行判断。</p>
 </footer>
 </div>
@@ -965,6 +998,11 @@ footer.end { margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--ru
       bar.addEventListener("mouseleave", function () { showC(null); }); bar.addEventListener("blur", function () { showC(null); });
     });
   }
+
+  /* ---------- 打印时展开所有折叠内容 ---------- */
+  window.addEventListener("beforeprint", function () {
+    document.querySelectorAll("details").forEach(function (d) { d.open = true; });
+  });
 
   /* ---------- 章节高亮 ---------- */
   var links = Array.prototype.slice.call(document.querySelectorAll(".bore a"));

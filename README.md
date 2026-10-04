@@ -15,7 +15,11 @@
 1. 在 GitHub 仓库页面点绿色 `Code` 按钮 → `Download ZIP`，或者 `git clone`
 2. 解压后双击 `index.html`，用浏览器打开即可
 
-**方法 2：变成一个网址（GitHub Pages，免费）**
+**方法 2：PDF 版（适合下载、打印、发给别人）**
+
+仓库根目录的 `AI-2028-Map.pdf`（A4，19 页）。在 GitHub 上点开这个文件，右上角有下载按钮。
+
+**方法 3：变成一个网址（GitHub Pages，免费）**
 
 1. 先把工作分支合并到 `main`（见下文"分支说明"）
 2. 仓库页面 → `Settings` → `Pages`
@@ -31,6 +35,8 @@
 ```
 .
 ├── index.html     报告本体（内容 + 样式 + 图表都在这一个文件里）
+├── AI-2028-Map.pdf  PDF 版（由 index.html 自动生成）
+├── scripts/make-pdf.js  重新生成 PDF 的脚本
 ├── README.md      本说明：怎么看、怎么恢复、怎么继续
 ├── CHANGELOG.md   版本记录
 └── .nojekyll      让 GitHub Pages 原样发布
@@ -101,6 +107,20 @@ l4 从业者怎么办、l5 路线图）和附录信号表。
 5. 保持原有的通俗风格（高中生能看懂）、中美对照和"说真话"的基调。
 6. 改完后提交并推送到 GitHub。
 ```
+
+### 改完网页后重新生成 PDF
+
+PDF 是从 `index.html` 自动排版出来的，网页改了以后跑一次即可：
+
+```bash
+npm install playwright        # 第一次需要
+npx playwright install chromium   # 第一次需要（下载浏览器）
+node scripts/make-pdf.js      # 生成 / 覆盖 AI-2028-Map.pdf
+```
+
+不想装环境也可以：用 Chrome 打开 `index.html` → 打印 → 目标选"另存为 PDF"，纸张 A4，勾选"背景图形"。网页里已经写好了打印样式，效果与脚本生成的基本一致。
+
+给 AI 续写时，在指令最后加一句"改完后运行 node scripts/make-pdf.js 重新生成 PDF"即可。
 
 ### 建议的更新节奏
 
